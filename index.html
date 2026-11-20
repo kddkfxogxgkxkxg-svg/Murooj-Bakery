@@ -1,0 +1,529 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Murooj Bakery | مخبز مروج</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --cream: #fbf7ee;
+    --brown: #76543d;
+    --dark-brown: #63442f;
+    --gold: #c6a16d;
+    --border: #e8d9c2;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    font-family: Tahoma, Arial, sans-serif;
+    color: var(--brown);
+    background: var(--cream);
+    overflow-x: hidden;
+}
+
+/* الهيدر */
+header {
+    position: relative;
+    z-index: 10;
+    height: 100px;
+    padding: 10px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 253, 247, 0.88);
+    border-bottom: 1px solid rgba(220, 201, 173, 0.45);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+/* الشعار المصغر */
+.logo {
+    position: absolute;
+    left: 17px;
+    top: 50%;
+    width: 52px;
+    height: 45px;
+    object-fit: contain;
+    transform: translateY(-50%) rotate(-8deg);
+    animation: logoPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes logoPulse {
+    0%, 100% {
+        transform: translateY(-50%) rotate(-8deg) scale(1);
+    }
+    50% {
+        transform: translateY(-50%) rotate(-8deg) scale(1.04);
+    }
+}
+
+/* اسم المخبز المصغر */
+.brand {
+    text-align: center;
+    line-height: 1.6;
+}
+
+.brand h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 22px;
+    color: var(--brown);
+    direction: ltr;
+    font-weight: bold;
+}
+
+.brand p {
+    font-size: 12px;
+    color: #b99b73;
+}
+
+/* زر القائمة المصغر */
+.menu-btn {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border: 1.5px solid var(--border);
+    border-radius: 15px;
+    background: rgba(255, 253, 247, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.menu-btn:hover {
+    background: #f0e5d4;
+}
+
+/* الخطوط الثلاثة */
+.menu-btn span {
+    display: block;
+    width: 24px;
+    height: 3.5px;
+    background: #694a34;
+    border-radius: 2px;
+    transition: transform 0.2s, opacity 0.2s;
+}
+
+/* حركة التحول إلى علامة إغلاق */
+.menu-btn.active span:first-child {
+    transform: translateY(8.5px) rotate(45deg);
+}
+
+.menu-btn.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-btn.active span:last-child {
+    transform: translateY(-8.5px) rotate(-45deg);
+}
+
+/* القائمة المنسدلة */
+.menu {
+    position: absolute;
+    top: calc(100% - 2px);
+    right: 16px;
+    width: 200px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: rgba(255, 252, 245, 0.97);
+    box-shadow: 0 12px 30px rgba(90, 64, 42, 0.12);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-6px);
+    transition: 0.2s ease;
+}
+
+.menu.open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.menu a {
+    display: block;
+    padding: 12px;
+    border-radius: 9px;
+    color: var(--dark-brown);
+    background: #f5ecde;
+    text-decoration: none;
+    font-size: 13px;
+    text-align: right;
+    transition: background 0.2s;
+}
+
+.menu a:hover {
+    background: #ead9bf;
+}
+
+/* الصفحة الرئيسية */
+.hero {
+    min-height: calc(100svh - 100px);
+    padding: 65px 24px 75px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    background:
+        radial-gradient(
+            ellipse at 12% 30%,
+            rgba(222, 199, 158, 0.32),
+            transparent 48%
+        ),
+        radial-gradient(
+            ellipse at 88% 70%,
+            rgba(236, 219, 189, 0.36),
+            transparent 48%
+        ),
+        linear-gradient(
+            120deg,
+            #f8f0df,
+            #fffdf7 55%,
+            #f7efdf
+        );
+}
+
+/* زخارف صغيرة مثل الصورة الأصلية */
+.sparkle {
+    position: absolute;
+    color: #c8ab7f;
+    font-size: 15px;
+    line-height: 1;
+    opacity: 0.8;
+    pointer-events: none;
+    animation: float 3s ease-in-out infinite;
+}
+
+.sparkle.one {
+    top: 15%;
+    left: 8%;
+}
+
+.sparkle.two {
+    top: 23%;
+    right: 9%;
+    animation-delay: 0.5s;
+}
+
+.sparkle.three {
+    bottom: 19%;
+    left: 10%;
+    animation-delay: 1s;
+}
+
+.sparkle.four {
+    bottom: 13%;
+    right: 9%;
+    animation-delay: 0.7s;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-4px);
+    }
+}
+
+/* العبارة الإنجليزية */
+.eyebrow {
+    margin-bottom: 28px;
+    color: #b99a6d;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+    direction: ltr;
+}
+
+/* العنوان الرئيسي */
+.hero h2 {
+    max-width: 850px;
+    font-size: clamp(28px, 5.5vw, 42px);
+    line-height: 1.8;
+    font-weight: 700;
+    color: #674831;
+}
+
+.hero h2 span {
+    color: #bd9865;
+}
+
+/* وصف الصفحة */
+.subtitle {
+    margin-top: 20px;
+    color: #907963;
+    font-size: clamp(14px, 2.8vw, 19px);
+    line-height: 2.2;
+}
+
+.tagline {
+    margin-top: 10px;
+    color: #c2a171;
+    font-size: clamp(12px, 2.4vw, 16px);
+    line-height: 2;
+}
+
+/* البطاقة الزجاجية */
+.message-card {
+    width: min(100%, 700px);
+    margin-top: 42px;
+    padding: 30px 24px;
+    border: 1.5px solid rgba(255, 255, 255, 0.95);
+    border-radius: 32px;
+    background: rgba(255, 255, 255, 0.40);
+    box-shadow: 0 12px 40px rgba(120, 91, 58, 0.035);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    scroll-margin-top: 20px;
+}
+
+.message-card h3 {
+    margin-bottom: 17px;
+    color: #79563d;
+    font-size: clamp(19px, 3.5vw, 27px);
+    line-height: 1.8;
+}
+
+.message-card p {
+    color: #95806a;
+    font-size: clamp(13px, 2.5vw, 17px);
+    line-height: 2.3;
+}
+
+/* تكييف التصميم للجوال */
+@media (max-width: 600px) {
+    header {
+        height: 90px;
+        padding: 8px 12px;
+    }
+
+    .logo {
+        left: 10px;
+        width: 43px;
+        height: 38px;
+    }
+
+    .brand h1 {
+        font-size: 18px;
+    }
+
+    .brand p {
+        font-size: 11px;
+    }
+
+    .menu-btn {
+        right: 12px;
+        width: 42px;
+        height: 42px;
+        border-radius: 13px;
+        gap: 4.5px;
+    }
+
+    .menu-btn span {
+        width: 22px;
+        height: 3px;
+    }
+
+    .menu-btn.active span:first-child {
+        transform: translateY(7.5px) rotate(45deg);
+    }
+
+    .menu-btn.active span:last-child {
+        transform: translateY(-7.5px) rotate(-45deg);
+    }
+
+    .menu {
+        right: 12px;
+        width: 190px;
+    }
+
+    .hero {
+        min-height: calc(100svh - 90px);
+        padding: 70px 22px 65px;
+    }
+
+    .eyebrow {
+        margin-bottom: 26px;
+        letter-spacing: 2px;
+        font-size: 11px;
+    }
+
+    .hero h2 {
+        line-height: 1.9;
+    }
+
+    .subtitle {
+        margin-top: 18px;
+    }
+
+    .message-card {
+        margin-top: 38px;
+        padding: 27px 19px;
+        border-radius: 29px;
+    }
+
+    .message-card h3 {
+        margin-bottom: 14px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <button
+        class="menu-btn"
+        id="menuBtn"
+        type="button"
+        aria-label="فتح القائمة"
+        aria-expanded="false"
+        aria-controls="menu"
+    >
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <nav class="menu" id="menu">
+        <a href="#home">الصفحة الرئيسية</a>
+        <a href="#bakery">المخبوزات</a>
+        <a href="#contact">تواصل معنا للطلب</a>
+    </nav>
+
+    <img
+        class="logo"
+        src="https://i.imgur.com/JIkec0K.png"
+        alt="شعار مخبز مروج"
+    >
+
+    <div class="brand">
+        <h1>Murooj Bakery</h1>
+        <p>مخبز مروج</p>
+    </div>
+</header>
+
+<main>
+    <section class="hero" id="home">
+
+        <span class="sparkle one">✧</span>
+        <span class="sparkle two">✧</span>
+        <span class="sparkle three">✦</span>
+        <span class="sparkle four">✧</span>
+
+        <p class="eyebrow">
+            FRESHLY BAKED WITH LOVE
+        </p>
+
+        <h2>
+            أهلاً بكم في عالم
+            <span>المخبوزات</span>
+        </h2>
+
+        <p class="subtitle">
+            نكهة دافئة، وجودة من القلب.
+            <br>
+            مخبوزات طازجة تجعل لحظاتكم أجمل.
+        </p>
+
+        <p class="tagline">
+            تفاصيل بسيطة، وطعم يستحق العودة إليه.
+        </p>
+
+        <div class="message-card" id="bakery">
+            <h3>مخبوزات تصنع لحظات جميلة</h3>
+            <p>
+                من أول رائحة تخرج من الفرن،
+                إلى آخر لقمة تجمع الأحباب.
+                <br>
+                في مخبز مروج، نخبز بكل حب
+                لنضيف ليومكم نكهة مميزة.
+            </p>
+        </div>
+
+        <div id="contact"></div>
+
+    </section>
+</main>
+
+<script>
+const menuBtn = document.getElementById("menuBtn");
+const menu = document.getElementById("menu");
+
+function setMenu(open) {
+    menuBtn.classList.toggle("active", open);
+    menu.classList.toggle("open", open);
+
+    menuBtn.setAttribute("aria-expanded", String(open));
+    menuBtn.setAttribute(
+        "aria-label",
+        open ? "إغلاق القائمة" : "فتح القائمة"
+    );
+}
+
+menuBtn.addEventListener("click", function () {
+    setMenu(!menu.classList.contains("open"));
+});
+
+menu.querySelectorAll("a").forEach(function (link) {
+    link.addEventListener("click", function () {
+        setMenu(false);
+    });
+});
+
+document.addEventListener("click", function (event) {
+    if (
+        !menuBtn.contains(event.target) &&
+        !menu.contains(event.target)
+    ) {
+        setMenu(false);
+    }
+});
+
+document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") {
+        setMenu(false);
+    }
+});
+</script>
+
+</body>
+</html>
